@@ -1,0 +1,16 @@
+[package]
+name = 'whos'
+version = '0.1.0'
+edition = '2021'
+
+[dependencies]
+lazy-regex = '3'
+punycode = '0.4'
+phf = { version = '0.11', features = ['macros'] }
+thiserror = '1'
+
+[build-dependencies]
+ureq = '2.9'
+
+[workspace]
+members = ['build-data']

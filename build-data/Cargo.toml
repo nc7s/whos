@@ -1,0 +1,4 @@
+[package]
+name = 'build-data'
+publish = false
+edition = '2021'

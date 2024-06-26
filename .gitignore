@@ -1,0 +1,4 @@
+/target
+
+# WHOIS data aren't necessarily open source so we can't distribute them
+testdata/
