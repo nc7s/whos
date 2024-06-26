@@ -5,14 +5,20 @@ use {
 	crate::SUFFIX_SERVER_LIST,
 	lazy_regex::{regex_captures, regex_is_match},
 };
+#[cfg(feature = "chrono")]
+type DT = chrono::DateTime<chrono::Utc>;
+#[cfg(all(feature = "time", not(feature = "chrono")))]
+type DT = time::OffsetDateTime;
+#[cfg(not(any(feature = "chrono", feature = "time")))]
+type DT = String;
 
 #[derive(Debug, Default)]
 pub struct Domain {
 	pub name: String,
 	pub suffix: String,
 
-	pub created: Option<String>,
-	pub expiry: Option<String>,
+	pub created: Option<DT>,
+	pub expiry: Option<DT>,
 
 	pub name_servers: Vec<String>,
 }
@@ -74,7 +80,7 @@ pub fn parse_name(raw: &str) -> Option<String> {
  * **Note**: this is still the raw result. Turning into datetime structs is not
  * implemented.
 */
-pub fn parse_created(raw: &str) -> Option<String> {
+pub fn parse_created(raw: &str) -> Option<DT> {
 	/* Notes:
 	 * - `^`: start of line (.ac.uk series' newlines are normalized)
 	 * - `[(]?`: .xn--zfr164b has `注册时间(Creation Date): ...`
@@ -85,7 +91,8 @@ pub fn parse_created(raw: &str) -> Option<String> {
 	 */
 	regex_captures!(r"^.*[(]?(?:(?:[Cc]reat(?:ion|ed)|[Rr]egist(?:ered|ration))\s*(?:[Dd]ate|[Oo]n|[Tt]ime)?|dateregistered|[Aa]ctivation|Fecha de activación|activated|création)\W*(\d[0-9TZ.:-]+|\w+\s+\w*\d+\w+)"m, raw)
 		.map(|caps| caps.1)
-		.map(|s| s.to_string())
+		.map(_parse_datetime)
+		.flatten()
 }
 
 /** Find and parse the expiry time.
@@ -93,11 +100,12 @@ pub fn parse_created(raw: &str) -> Option<String> {
  * **Note**: this is still the raw result. Turning into datetime structs is not
  * implemented.
 */
-pub fn parse_expiry(raw: &str) -> Option<String> {
+pub fn parse_expiry(raw: &str) -> Option<DT> {
 	/* Basically the same as parse_created, except keywords */
 	regex_captures!(r"^.*(?:[Ee]xpir(?:y|ation|es?)\s*(?:[Dd]ate|[Tt]ime|[Oo]n|)|[Ee]xp [Dd]ate|[Rr]enewal [Dd]ate|datebilleduntil|paid-till|[Vv]alidity:|[Vv]alid [Uu]ntil|Fecha de corte)\W*([0-9A-Za-z:. -]+\d[0-9A-Za-z:. -]+)"m, raw)
 		.map(|caps| caps.1)
-		.map(|s| s.to_string())
+		.map(_parse_datetime)
+		.flatten()
 }
 
 /** Find and parse the name servers. */
@@ -109,4 +117,31 @@ pub fn parse_ns(raw: &str) -> Vec<String> {
 				.map(|s| s.to_ascii_lowercase())
 		})
 		.collect()
+}
+
+#[cfg(feature = "chrono")]
+fn _parse_datetime(raw: &str) -> Option<DT> {
+	if let Ok(rfc3339) = chrono::DateTime::parse_from_rfc3339(raw) {
+		return Some(rfc3339.to_utc());
+	}
+	if let Ok(dotted_dmy_padded) = chrono::DateTime::parse_from_str(raw, "%d.%m.%Y") {
+		return Some(dotted_dmy_padded.to_utc());
+	}
+	None
+}
+
+#[cfg(all(feature = "time", not(feature = "chrono")))]
+fn _parse_datetime(raw: &str) -> Option<DT> {
+	use time::format_description::well_known::Rfc3339;
+
+	if let Ok(rfc3339) = time::OffsetDateTime::parse(raw, &Rfc3339) {
+		return Some(rfc3339.to_offset(time::UtcOffset::UTC));
+	}
+
+	None
+}
+
+#[cfg(not(any(feature = "chrono", feature = "time")))]
+fn _parse_datetime(raw: &str) -> Option<DT> {
+	Some(raw.to_string())
 }

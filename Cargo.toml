@@ -17,6 +17,12 @@ lazy-regex = '3'
 punycode = '0.4'
 phf = { version = '0.11', features = ['macros'] }
 thiserror = '1'
+chrono = { version = '0.4', optional = true }
+time = { version = '0.3', optional = true, features = ['parsing'] }
+
+[features]
+chrono = ['dep:chrono']
+time = ['dep:time']
 
 [workspace]
 members = ['build-data']
