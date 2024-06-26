@@ -18,8 +18,5 @@ punycode = '0.4'
 phf = { version = '0.11', features = ['macros'] }
 thiserror = '1'
 
-[build-dependencies]
-ureq = '2.9'
-
 [workspace]
 members = ['build-data']
