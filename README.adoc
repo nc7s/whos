@@ -1,0 +1,50 @@
+= `whos("th.at")?` - Rust whois library
+
+[source,rust]
+----
+let domain = whos::domain("debian.org").unwrap();
+assert_eq!(domain.name, "debian.org");
+assert_eq!(domain.suffix, ".org");
+assert_eq!(domain.created, Some("1999-03-10T05:00:00Z"));
+----
+
+----
+$ cargo run --example domain -- debian.org
+domain : debian.org
+created: 1999-03-10T05:00:00Z
+expiry : 2025-03-10T05:00:00Z
+name servers: dns4.easydns.info nsp.dnsnode.net sec1.rcode0.net sec2.rcode0.net
+
+# basically the same
+$ whois debian.org | cargo run --example domain
+----
+
+Currently the parsing functionality is focused on domain names.
+
+== Versioning
+
+WHOIS server "major" changes, e.g. a suffix losing its server, are not
+considered breaking changes.
+
+== Testing
+
+Due to data use policies of registries, test data can not be distributed in this
+repository. For most suffixes, the base domains of their WHOIS servers are
+enough; others might need manual checks.
+
+== Maintenance
+
+Check if whois(1) has updated data (tld_serv_list & new_gtlds_list); if so,
+
+. `cargo run --package build-data`
+. Examine `git diff src/server_list.rs`
+
+== Acknowledgements
+
+WHOIS server data is from https://github.com/rfc1036/whois[whois(1)] by Marco
+d'Itri, licensed under GPL 2.0.
+Specifically, the `tld_server_list` and `new_gtlds_list` files.
+
+Domain name data parsing rules are derived from the Python
+https://github.com/mboot-github/WhoisDomain[WhoisDomain] library,
+licensed under MIT license.

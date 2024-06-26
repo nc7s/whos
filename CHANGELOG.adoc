@@ -1,0 +1,19 @@
+= Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on https://keepachangelog.com/en/1.1.0/[Keep a Changelog],
+and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Versioning].
+
+== <<Unreleased>>
+
+== <<0.1.0>>
+
+=== Added
+
+* Raw WHOIS query
+* Domain name response parsing for
+** Name
+** Created time
+** Expiry time
+** Name servers
