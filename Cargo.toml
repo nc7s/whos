@@ -1,7 +1,14 @@
 [package]
 name = 'whos'
+description = 'whois library'
+homepage = 'https://github.com/nc7s/whos'
+repository = 'https://github.com/nc7s/whos.git'
+authors = ['Blair Noctis <n@sail.ng>']
+license = 'BSD-3-Clause'
 version = '0.1.0'
 edition = '2021'
+
+exclude = ['md-whois/', '']
 
 [dependencies]
 lazy-regex = '3'
