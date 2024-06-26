@@ -34,8 +34,8 @@ fn main() {
 		Some(domain) => println!(
 			"domain : {}\ncreated: {}\nexpiry : {}\nname servers: {}",
 			domain.name,
-			domain.created.unwrap_or("unknown".to_string()),
-			domain.expiry.unwrap_or("unknown".to_string()),
+			domain.created.map(|dt| dt.to_string()).unwrap_or("unknown".to_string()),
+			domain.expiry.map(|dt| dt.to_string()).unwrap_or("unknown".to_string()),
 			domain.name_servers.join(" "),
 		),
 		None => println!("seems to be unregistered"),
