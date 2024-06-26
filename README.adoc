@@ -36,6 +36,7 @@ enough; others might need manual checks.
 
 Check if whois(1) has updated data (tld_serv_list & new_gtlds_list); if so,
 
+. `git submodule update --init`
 . `cargo run --package build-data`
 . Examine `git diff src/server_list.rs`
 
