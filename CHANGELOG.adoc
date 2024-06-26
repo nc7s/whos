@@ -7,6 +7,12 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 
 == <<Unreleased>>
 
+== <<0.2.0>> - 2024-06-26
+
+=== Added
+
+* chrono and time support for related fields of `Domain`
+
 == <<0.1.0>> - 2024-06-26
 
 === Added
