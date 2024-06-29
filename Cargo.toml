@@ -13,7 +13,7 @@ license.workspace = true
 include = ['src/', 'examples/', 'Cargo.*', '*.adoc', '*.toml', 'LICENSE']
 
 [dependencies]
-whos-data = { path = 'data' }
+whos-data = { version = '0.1.0', path = 'data' }
 lazy-regex = '3'
 punycode = '0.4'
 thiserror = '1'
