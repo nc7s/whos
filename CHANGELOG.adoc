@@ -7,6 +7,14 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 
 == <<Unreleased>>
 
+== <<0.3.0>> - 2024-06-29
+
+=== Changed
+
+* Split data into separate crate; since there is no need to keep a changelog for
+data changes, only changes to the crate itself qualify entry here, which will
+be accompanied by a new version of the main crate.
+
 == <<0.2.0>> - 2024-06-26
 
 === Added
