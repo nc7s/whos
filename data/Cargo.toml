@@ -1,8 +1,14 @@
 [package]
 name = 'whos-data'
-description = 'Data for the whos library'
 version = '0.1.0'
 edition = '2021'
+description = 'data for the whos library'
+categories.workspace = true
+keywords.workspace = true
+homepage.workspace = true
+repository.workspace = true
+authors.workspace = true
+license.workspace = true
 
 [dependencies]
 phf = { version = '0.11', features = ['macros'] }

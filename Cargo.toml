@@ -3,12 +3,12 @@ name = 'whos'
 version = '0.3.0'
 edition = '2021'
 description = 'whois library'
-categories = ['web-programming']
-keywords = ['whois', 'domain-name']
-homepage = 'https://github.com/nc7s/whos'
-repository = 'https://github.com/nc7s/whos.git'
-authors = ['Blair Noctis <n@sail.ng>']
-license = 'BSD-3-Clause'
+categories.workspace = true
+keywords.workspace = true
+homepage.workspace = true
+repository.workspace = true
+authors.workspace = true
+license.workspace = true
 
 include = ['src/', 'examples/', 'Cargo.*', '*.adoc', '*.toml', 'LICENSE']
 
@@ -26,3 +26,11 @@ time = ['dep:time']
 
 [workspace]
 members = ['build-data', 'data']
+
+[workspace.package]
+categories = ['web-programming']
+keywords = ['whois', 'domain-name']
+homepage = 'https://github.com/nc7s/whos'
+repository = 'https://github.com/nc7s/whos.git'
+authors = ['Blair Noctis <n@sail.ng>']
+license = 'BSD-3-Clause'
