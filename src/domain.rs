@@ -91,8 +91,7 @@ pub fn parse_created(raw: &str) -> Option<DT> {
 	 */
 	regex_captures!(r"^.*[(]?(?:(?:[Cc]reat(?:ion|ed)|[Rr]egist(?:ered|ration))\s*(?:[Dd]ate|[Oo]n|[Tt]ime)?|dateregistered|[Aa]ctivation|Fecha de activación|activated|création)\W*(\d[0-9TZ.:-]+|\w+\s+\w*\d+\w+)"m, raw)
 		.map(|caps| caps.1)
-		.map(_parse_datetime)
-		.flatten()
+		.and_then(_parse_datetime)
 }
 
 /** Find and parse the expiry time.
@@ -104,8 +103,7 @@ pub fn parse_expiry(raw: &str) -> Option<DT> {
 	/* Basically the same as parse_created, except keywords */
 	regex_captures!(r"^.*(?:[Ee]xpir(?:y|ation|es?)\s*(?:[Dd]ate|[Tt]ime|[Oo]n|)|[Ee]xp [Dd]ate|[Rr]enewal [Dd]ate|datebilleduntil|paid-till|[Vv]alidity:|[Vv]alid [Uu]ntil|Fecha de corte)\W*([0-9A-Za-z:. -]+\d[0-9A-Za-z:. -]+)"m, raw)
 		.map(|caps| caps.1)
-		.map(_parse_datetime)
-		.flatten()
+		.and_then(_parse_datetime)
 }
 
 /** Find and parse the name servers. */
