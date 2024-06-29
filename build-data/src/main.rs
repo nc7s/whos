@@ -54,5 +54,5 @@ fn build_suffix_server_list() {
 
 	lines.push(");".to_string());
 
-	fs::write("src/server_list.rs", lines.join("\n")).unwrap();
+	fs::write("data/src/server_list.rs", lines.join("\n")).unwrap();
 }

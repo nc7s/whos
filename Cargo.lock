@@ -446,10 +446,17 @@ version = "0.2.0"
 dependencies = [
  "chrono",
  "lazy-regex",
- "phf",
  "punycode",
  "thiserror",
  "time",
+ "whos-data",
+]
+
+[[package]]
+name = "whos-data"
+version = "0.1.0"
+dependencies = [
+ "phf",
 ]
 
 [[package]]

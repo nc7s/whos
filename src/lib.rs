@@ -13,14 +13,9 @@ Parsing is currently focused on domain names.
 
 pub mod domain;
 mod raw;
-mod server_list;
 pub use raw::whois_raw;
-/** Suffix-to-server mappings generated from data files from whois(1).
- *
- * Keys are domain name suffixes; values are `Some(server_name)` if there is a
- * working server, `None` otherwise.
- */
-pub use server_list::SUFFIX_SERVER_LIST;
+
+pub use whos_data::SUFFIX_SERVER_LIST;
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
